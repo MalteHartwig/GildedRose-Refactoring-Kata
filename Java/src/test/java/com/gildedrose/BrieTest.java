@@ -5,9 +5,13 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BrieTest {
+
+    private final int MAX_QUALITY = 50;
+    private final String ITEM_AGED_BRIE = "Aged Brie";
+
     @Test
     void increasesQualityAndDecreasesSellIn() {
-        Item[] items = new Item[]{new Item("Aged Brie", 10, 10)};
+        Item[] items = new Item[]{new Item(ITEM_AGED_BRIE, 10, 10)};
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals(9, app.items[0].sellIn);
@@ -15,17 +19,17 @@ public class BrieTest {
     }
 
     @Test
-    void shouldNotIncreaseQualityAfterMaximum() {
-        Item[] items = new Item[]{new Item("Aged Brie", 1, 50)};
+    void shouldNotIncreaseQualityAfterMaximumIsReached() {
+        Item[] items = new Item[]{new Item(ITEM_AGED_BRIE, 1, MAX_QUALITY)};
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals(0, app.items[0].sellIn);
-        assertEquals(50, app.items[0].quality);
+        assertEquals(MAX_QUALITY, app.items[0].quality);
     }
 
     @Test
-    void sellinIsBelowZeroQualityInreasesDouble() {
-        Item[] items = new Item[]{new Item("Aged Brie", 0, 0)};
+    void sellInIsBelowZeroQualityIncreasesDouble() {
+        Item[] items = new Item[]{new Item(ITEM_AGED_BRIE, 0, 0)};
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals(-1, app.items[0].sellIn);
@@ -33,17 +37,17 @@ public class BrieTest {
     }
 
     @Test
-    void sellinIsBelowZeroQualityInreasesDoubleTillFifty() {
-        Item[] items = new Item[]{new Item("Aged Brie", -5, 49)};
+    void sellInIsBelowZeroQualityIncreasesDoubleTillMaximumQuality() {
+        Item[] items = new Item[]{new Item(ITEM_AGED_BRIE, -5, MAX_QUALITY - 1)};
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals(-6, app.items[0].sellIn);
-        assertEquals(50, app.items[0].quality);
+        assertEquals(MAX_QUALITY, app.items[0].quality);
     }
 
     @Test
-    void updateFourtimesQualityimproves() {
-        Item[] items = new Item[]{new Item("Aged Brie", 1, 0)};
+    void updateFourTimesQualityImproves() {
+        Item[] items = new Item[]{new Item(ITEM_AGED_BRIE, 1, 0)};
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         app.updateQuality();
