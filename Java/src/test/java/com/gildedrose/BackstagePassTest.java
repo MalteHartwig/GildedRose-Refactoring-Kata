@@ -1,6 +1,6 @@
 package com.gildedrose;
 
-import jdk.nashorn.internal.ir.annotations.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -74,7 +74,7 @@ class BackstagePassTest {
 
     }
 
-    @Ignore
+    @Disabled
     @Test
     void quality_ShouldThrowException_WhenQualityLessThanZero() {
         Item[] items = new Item[] { new Item("Backstage passes to a TAFKAL80ETC concert", 5, -1)};
@@ -94,7 +94,7 @@ class BackstagePassTest {
     }
 
 
-    @Ignore
+    @Disabled
     @Test
     void quality_ShouldNotThrowException_WhenItemListContainsNull() {
         Item[] items = new Item[]{null};
