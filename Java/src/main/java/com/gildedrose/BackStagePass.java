@@ -6,23 +6,19 @@ public class BackStagePass extends Item {
     }
 
     @Override
-    public void increaseQuality() {
-        super.increaseQuality();
-        if (sellIn < 11) {
-            super.increaseQuality();
-        }
-
-        if (sellIn < 6) {
-            super.increaseQuality();
-        }
-    }
-
-    @Override
     public void updateQuality() {
-        increaseQuality();
-        sellIn = sellIn - 1;
-        if (sellIn < 0) {
+        if (isExpired()) {
             quality = 0;
+            return;
         }
+        if (sellIn < 6) {
+            increaseQuality(3);
+            return;
+        }
+        if (sellIn < 11) {
+            increaseQuality(2);
+            return;
+        }
+        increaseQuality(1);
     }
 }

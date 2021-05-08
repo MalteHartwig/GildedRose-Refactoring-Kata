@@ -1,7 +1,6 @@
 package com.gildedrose;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 class GildedRose {
 
@@ -12,24 +11,28 @@ class GildedRose {
     }
 
     private Item[] createItems(Item[] items) {
-        List<Item> res = new ArrayList<>();
-        for (Item item : items) {
-            if (item.name.equals(Item.ITEM_BACKSTAGE_PASS)) {
-                res.add(new BackStagePass(item.name, item.sellIn, item.quality));
-            } else if (item.name.equals(Item.ITEM_SULFURAS)) {
-                res.add(new Surfuras(item.name, item.sellIn, item.quality));
-            } else if (item.name.equals(Item.ITEM_AGED_BRIE)) {
-                res.add(new AgedBrie(item.name, item.sellIn, item.quality));
-            } else {
-                res.add(item);
-            }
+        return Arrays.stream(items).map(this::createItem).toArray(Item[]::new);
+    }
+
+    private Item createItem(Item item) {
+        switch (item.name) {
+            case Item.ITEM_BACKSTAGE_PASS:
+                return new BackStagePass(item.name, item.sellIn, item.quality);
+            case Item.ITEM_SULFURAS:
+                return new Sulfuras(item.name, item.sellIn, item.quality);
+            case Item.ITEM_AGED_BRIE:
+                return new AgedBrie(item.name, item.sellIn, item.quality);
+            case Item.ITEM_CONJURED:
+                return new Conjured(item.name, item.sellIn, item.quality);
+            default:
+                return item;
         }
-        return res.toArray(new Item[0]);
     }
 
     public void updateQuality() {
-        for (Item item : items) {
+        Arrays.stream(items).forEach(item -> {
+            item.updateSellIn();
             item.updateQuality();
-        }
+        });
     }
 }
